@@ -31,6 +31,7 @@ class Game extends Component {
 
     handleAnswer = event => {
         const newArrayValue = this.randomQuestion();
+        const answerCorrect = this.x(event.target.name)
         this.setState(newArrayValue);
     }
 
@@ -40,8 +41,8 @@ class Game extends Component {
                 <div className="equation">
                     <p className="text">{`${value1} + ${value2} + ${value3} = ${answer}`}</p>
                 </div>
-                <button  >True</button>
-                <button>False</button>
+                <button onClick={this.handleAnswer} name="true">True</button>
+                <button onClick={this.handleAnswer} name="false">False</button>
             </div>
         );
     }
