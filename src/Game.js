@@ -20,22 +20,36 @@ class Game extends Component {
         return (value1, value2, value3, answer);
     };
 
-    updateState = () => {
-        this.setSSate(currState => ({
-            value1: arrayValue[0],
-            value2: arrayValue[1],
-            value3: arrayValue[2],
-            answer: arrayValue[3]
+    updateState = newArrayValue => {
+        this.setState(currState => ({
+            value1: newArrayValue[0],
+            value2: newArrayValue[1],
+            value3: newArrayValue[2],
+            answer: newArrayValue[3]
         }));
     };
 
     handleAnswer = event => {
         const newArrayValue = this.randomQuestion();
-        const answerCorrect = this.x(event.target.name)
-        this.setState(newArrayValue);
+        const answerCorrect = this.checkAnswer(event.target.name)
+        this.updateState(newArrayValue);
+        this.props.handleAnswer(answerCorrect);
+    }
+
+    checkAnswer(getAns) {
+        const {value1, value2, value3, answer} = this.state;
+        const correctAns = value1 + value2 + value3;
+
+        return(
+            (correctAns === answer && getAns === "true") || (correctAns !== answer && getAns === "false")
+        );
     }
 
     render() {
+        const {value1, value2, value3, answer} = this.state;
+        console.log('====================================');
+        console.log(value1, value2, value3, answer);
+        console.log('====================================');
         return(
             <div>
                 <div className="equation">
